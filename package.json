@@ -1,0 +1,32 @@
+{
+  "name": "rhmap-push-test-driver",
+  "version": "1.0.0",
+  "description": "A test driver in nodeJS that send notification requests to a RHMAP Push app",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "node_modules/.bin/eslint app spec --fix",
+    "test": "node_modules/.bin/istanbul cover node_modules/jasmine/bin/jasmine.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/feedhenry/rhmap-push-test-driver.git"
+  },
+  "author": "",
+  "license": "Apache",
+  "dependencies": {
+    "async": "^2.1.4",
+    "commander": "^2.9.0",
+    "fast-csv": "^2.4.0",
+    "request": "^2.80.0",
+    "yargs": "^6.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.17.0",
+    "istanbul": "^0.4.5",
+    "jasmine": "^2.5.3"
+  },
+  "bugs": {
+    "url": "https://github.com/feedhenry/rhmap-push-test-driver/issues"
+  },
+  "homepage": "https://github.com/feedhenry/rhmap-push-test-driver#readme"
+}
