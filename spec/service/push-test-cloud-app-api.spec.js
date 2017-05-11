@@ -90,4 +90,20 @@ describe("UPSAPI", () => {
 
     });
 
+    describe(".notifyVariant", () => {
+
+        it("should return a promise with the result", done => {
+            args.endPoint = "http://localhost:1234/";
+
+            api = new API(args);
+            spyOn(api, "get").and.returnValue(new Promise((res, rej) => res("ok")));
+
+            api.notifyVariant("variant").then(res => {
+                expect(res).not.toBeUndefined();
+                done();
+            });
+        });
+
+    });
+
 });

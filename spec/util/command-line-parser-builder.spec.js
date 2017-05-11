@@ -10,8 +10,8 @@ describe("CommandLineParserBuilder", () => {
         const checkArguments = () => CommandLineParserBuilder.checkArguments(args);
 
         beforeEach(() => {
-            args.endPoint = undefined;
-            args.appId = undefined;
+            args.endPoint = "endPoint";
+            args.appId = "appId";
             args.csv = undefined;
             args.delay = "1000";
             args.instances = "1";
@@ -97,6 +97,28 @@ describe("CommandLineParserBuilder", () => {
             expect(checkArguments).toThrowError("ChunkSize (-s) must be a positive integer");
         });
 
+        // Variant
+        it("should throw if chunkSize is provided with variant", () => {
+            args.chunkSize = "4";
+            args.variant = "variant";
+
+            expect(checkArguments).toThrowError("BatchMode (-b), csv (-c) and ChunkSize (-s) cannot be with Variant (-v).");
+        });
+
+        it("should throw if csv is provided with variant", () => {
+            args.csv = "foo";
+            args.variant = "variant";
+
+            expect(checkArguments).toThrowError("BatchMode (-b), csv (-c) and ChunkSize (-s) cannot be with Variant (-v).");
+        });
+
+        it("should throw if batchSize is provided with variant", () => {
+            args.batchMode = true;
+            args.variant = "variant";
+
+            expect(checkArguments).toThrowError("BatchMode (-b), csv (-c) and ChunkSize (-s) cannot be with Variant (-v).");
+        });
+
         // Others
 
         it("should pass if endPoint, appId and csv are provided", () => {
@@ -106,26 +128,47 @@ describe("CommandLineParserBuilder", () => {
             expect(checkArguments).toBeTruthy();
         });
 
-        it("should throw if pushApplicationID, masterSecret and csv are not provided together", () => {
+        it("should pass if endPoint, appId and variant are provided", () => {
+            args.endPoint = "endPoint";
+            args.appId = "appId";
+            args.variant = "csv";
+            expect(checkArguments).toBeTruthy();
+        });
+
+        it("should throw if pushApplicationID or masterSecret are not defined", () => {
             args.endPoint = "endPoint";
             args.appId = undefined;
-            args.csv = undefined;
 
-            expect(checkArguments).toThrowError("Endpoint, AppId and CSV options are mandatory");
+            expect(checkArguments).toThrowError("Endpoint and AppId options are mandatory");
 
             args.endPoint = undefined;
             args.appId = "appId";
-            args.csv = undefined;
 
-            expect(checkArguments).toThrowError("Endpoint, AppId and CSV options are mandatory");
-
-            args.endPoint = undefined;
-            args.appId = undefined;
-            args.csv = "csv";
-
-            expect(checkArguments).toThrowError("Endpoint, AppId and CSV options are mandatory");
+            expect(checkArguments).toThrowError("Endpoint and AppId options are mandatory");
         });
 
+        it("should throw if only csv and variant are provided together", () => {
+            args.endPoint = "endPoint";
+            args.appId = "appId";
+            args.csv = "csv";
+            args.variant = "variant";
+
+            expect(checkArguments).toThrowError("BatchMode (-b), csv (-c) and ChunkSize (-s) cannot be with Variant (-v).");
+
+            args.endPoint = "endPoint";
+            args.appId = "appId";
+            args.csv = "csv";
+            args.variant = undefined;
+
+            expect(checkArguments).not.toThrowError("BatchMode (-b), csv (-c) and ChunkSize (-s) cannot be with Variant (-v).");
+
+            args.endPoint = "endPoint";
+            args.appId = "appId";
+            args.csv = undefined;
+            args.variant = "variant";
+
+            expect(checkArguments).not.toThrowError("BatchMode (-b), csv (-c) and ChunkSize (-s) cannot be with Variant (-v).");
+        });
     });
 
 });

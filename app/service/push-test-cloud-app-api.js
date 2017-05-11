@@ -43,6 +43,12 @@ class PushTestCloudAppAPI {
         return this.post(url, aliases);
     }
 
+    notifyVariant(variant) {
+        const url = `${this.baseUrl}/${this.pushRoute}/${this.appId}/variants/${variant}`;
+
+        return this.get(url);
+    }
+
     get(url) {
         return new Promise((resolve, reject) => {
             const callback = (err, res) => err ? reject(err) : resolve(res);

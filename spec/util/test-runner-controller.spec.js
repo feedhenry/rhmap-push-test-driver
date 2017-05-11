@@ -7,11 +7,7 @@ const TestRunnerBatch = require("../../app/model/test-runner-batch");
 
 describe("TestRunnerController", () => {
 
-    const args = {
-        endPoint: "endPoint",
-        appId: "appId",
-        csv: "csv"
-    };
+    const args = {};
 
     const testRunners = [];
 
@@ -30,7 +26,27 @@ describe("TestRunnerController", () => {
         });
 
         beforeEach(() => {
+            args.endPoint = "endPoint";
+            args.appId = "appId";
+            args.csv = "csv";
+
             spyOn(controller, "startTestRunnersAsync");
+        });
+
+        it("should call getAliasesFromCSV if csv argument is defined", () => {
+            const count = controller.getAliasesFromCSV.calls.count();
+            controller.start()
+                .then(() => expect(controller.getAliasesFromCSV.calls.count()).toBe(count + 1))
+                .catch(err => fail(err));
+        });
+
+        it("should not call getAliasesFromCSV if csv argument is undefined", () => {
+            args.csv = undefined;
+            const count = controller.getAliasesFromCSV.calls.count();
+
+            controller.start()
+                .then(() => expect(controller.getAliasesFromCSV.calls.count()).toBe(count))
+                .catch(err => fail(err));
         });
 
         it("should call startTestRunnersAsync", () => {

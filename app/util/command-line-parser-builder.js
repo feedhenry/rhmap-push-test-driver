@@ -51,6 +51,10 @@ class CommandLineParserBuilder {
             .default("b", false)
             .describe("b", "Whether or not the notifications will be sent using the 'batch' feature. Incompatible with --chunkSize option.")
 
+            .alias("v", "variant")
+            .nargs("v", 1)
+            .describe("v", "The variant that will receive the notification. Incompatible with --chunkSize, --batchMode and --csv options.")
+
             .check(this.checkArguments)
 
             .help("h")
@@ -61,6 +65,10 @@ class CommandLineParserBuilder {
     static checkArguments(args) {
         if (!parseInt(args.delay) || parseInt(args.delay) <= 0) {
             throw new Error("Delay (-d) must be a positive integer");
+        }
+
+        if (!args.endPoint || !args.appId) {
+            throw new Error("Endpoint and AppId options are mandatory");
         }
 
         if (!parseInt(args.instances) || parseInt(args.instances) <= 0) {
@@ -75,8 +83,14 @@ class CommandLineParserBuilder {
             throw new Error("BatchMode (-b) and ChunkSize (-s) cannot be together.");
         }
 
-        if (!args.endPoint || !args.appId || !args.csv) {
-            throw new Error("Endpoint, AppId and CSV options are mandatory");
+        if (args.chunkSize > 0 && args.variant
+            || args.batchMode && args.variant
+            || args.csv && args.variant) {
+            throw new Error("BatchMode (-b), csv (-c) and ChunkSize (-s) cannot be with Variant (-v).");
+        }
+
+        if (!args.csv && !args.variant) {
+            throw new Error("Either a list of aliases or a variant must be specified");
         }
 
         return true;

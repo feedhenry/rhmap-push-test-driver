@@ -4,6 +4,7 @@ const TestRunnerBuilder = require("../../app/util/test-runner-builder");
 const TestRunnerSingleAsync = require("../../app/model/test-runner-single-async");
 const TestRunnerChunksAsync = require("../../app/model/test-runner-chunk-async");
 const TestRunnerBatch = require("../../app/model/test-runner-batch");
+const TestRunnerSingleVariant = require("../../app/model/test-runner-single-variant");
 const TestRunner = require("../../app/model/test-runner");
 
 describe("TestRunnerBuilder", () => {
@@ -47,6 +48,14 @@ describe("TestRunnerBuilder", () => {
             const Type = getTestRunnerType();
 
             expect(new Type(args)).toEqual(jasmine.any(TestRunnerChunksAsync));
+        });
+
+        it("should return TestRunnerSingleVariant type if variant is passed", () => {
+            args.variant = "variant";
+
+            const Type = getTestRunnerType();
+
+            expect(new Type(args)).toEqual(jasmine.any(TestRunnerSingleVariant));
         });
 
     });
