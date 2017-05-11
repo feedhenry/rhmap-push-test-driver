@@ -10,17 +10,17 @@ class TestRunnerSingleVariant extends TestRunner {
 
     constructor(args) {
         super(args);
-        this.variant = args.variant;
+        this.variantId = args.variantId;
     }
 
     start() {
         super.start();
 
-        console.log(`Sending notifications to variant: ${this.variant}`);
+        console.log(`Sending notifications to variant: ${this.variantId}`);
 
-        this.api.notifyVariant(this.variant)
-            .then(res => console.log(`[${this.variant}] RESPONSE: ${res.statusCode} - ${res.body.error || res.body}`))
-            .catch(err => console.log(`[${this.variant}] ERROR: ${err}`));
+        this.api.notifyVariant(this.variantId)
+            .then(res => console.log(`[${this.variantId}] RESPONSE: ${res.statusCode} - ${res.body.error || res.body}`))
+            .catch(err => console.log(`[${this.variantId}] ERROR: ${err}`));
     }
 
 }

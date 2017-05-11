@@ -51,7 +51,7 @@ describe("TestRunnerBuilder", () => {
         });
 
         it("should return TestRunnerSingleVariant type if variant is passed", () => {
-            args.variant = "variant";
+            args.variantId = "variant";
 
             const Type = getTestRunnerType();
 

@@ -100,21 +100,21 @@ describe("CommandLineParserBuilder", () => {
         // Variant
         it("should throw if chunkSize is provided with variant", () => {
             args.chunkSize = "4";
-            args.variant = "variant";
+            args.variantId = "variant";
 
             expect(checkArguments).toThrowError("BatchMode (-b), csv (-c) and ChunkSize (-s) cannot be with Variant (-v).");
         });
 
         it("should throw if csv is provided with variant", () => {
             args.csv = "foo";
-            args.variant = "variant";
+            args.variantId = "variant";
 
             expect(checkArguments).toThrowError("BatchMode (-b), csv (-c) and ChunkSize (-s) cannot be with Variant (-v).");
         });
 
         it("should throw if batchSize is provided with variant", () => {
             args.batchMode = true;
-            args.variant = "variant";
+            args.variantId = "variant";
 
             expect(checkArguments).toThrowError("BatchMode (-b), csv (-c) and ChunkSize (-s) cannot be with Variant (-v).");
         });
@@ -131,7 +131,7 @@ describe("CommandLineParserBuilder", () => {
         it("should pass if endPoint, appId and variant are provided", () => {
             args.endPoint = "endPoint";
             args.appId = "appId";
-            args.variant = "csv";
+            args.variantId = "csv";
             expect(checkArguments).toBeTruthy();
         });
 
@@ -151,21 +151,21 @@ describe("CommandLineParserBuilder", () => {
             args.endPoint = "endPoint";
             args.appId = "appId";
             args.csv = "csv";
-            args.variant = "variant";
+            args.variantId = "variant";
 
             expect(checkArguments).toThrowError("BatchMode (-b), csv (-c) and ChunkSize (-s) cannot be with Variant (-v).");
 
             args.endPoint = "endPoint";
             args.appId = "appId";
             args.csv = "csv";
-            args.variant = undefined;
+            args.variantId = undefined;
 
             expect(checkArguments).not.toThrowError("BatchMode (-b), csv (-c) and ChunkSize (-s) cannot be with Variant (-v).");
 
             args.endPoint = "endPoint";
             args.appId = "appId";
             args.csv = undefined;
-            args.variant = "variant";
+            args.variantId = "variant";
 
             expect(checkArguments).not.toThrowError("BatchMode (-b), csv (-c) and ChunkSize (-s) cannot be with Variant (-v).");
         });

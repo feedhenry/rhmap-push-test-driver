@@ -24,7 +24,7 @@ class TestRunnerBuilder {
     }
 
     getTestRunnerType() {
-        if (this.args.variant) {
+        if (this.args.variantId) {
             return TestRunnerSingleVariant;
         } else if (this.args.batchMode) {
             return TestRunnerBatch;
