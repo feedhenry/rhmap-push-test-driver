@@ -4,7 +4,7 @@ const TestRunnerBuilder = require("../../app/util/test-runner-builder");
 const TestRunnerSingleAsync = require("../../app/model/test-runner-single-async");
 const TestRunnerChunksAsync = require("../../app/model/test-runner-chunk-async");
 const TestRunnerBatch = require("../../app/model/test-runner-batch");
-const TestRunnerSingleVariant = require("../../app/model/test-runner-single-variant");
+const TestRunnerSingleVariant = require("../../app/model/test-runner-variants");
 const TestRunner = require("../../app/model/test-runner");
 
 describe("TestRunnerBuilder", () => {
@@ -51,7 +51,7 @@ describe("TestRunnerBuilder", () => {
         });
 
         it("should return TestRunnerSingleVariant type if variant is passed", () => {
-            args.variantId = "variant";
+            args.variants = "variant";
 
             const Type = getTestRunnerType();
 

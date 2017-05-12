@@ -17,12 +17,15 @@ $ npm install --production
 ```
 Then start the test-runner by running `node index.js` and passing the necessary arguments. To see detailed usage instructions run `node index.js -h`:
 ```
-Usage: node index.js [Required] [UPS API specific] [options]
+Usage: node index.js [Required] [options]
 
 Required:
   -e, --endPoint           The cloud app endpoint url
   -a, --appId              The ID of the target application
-  -c, --csv                The path to the CSV path containing the alias in format 'variantId;alias;tokenId'
+  -c, --csv                The path to the CSV path containing the alias in format 'variants;alias;tokenId'.
+                           Incompatible with 'variants'.  
+  -v, --variants           The list of variants that will receive the notifications, separated by spaces. 
+                           Incompatible witn 'csv'.
 
 Options:
   -d, --delay              The delay between each request                                           [default: 6500]
@@ -39,6 +42,7 @@ Examples:
   node app/index.js -e http://example.com/backend -a asdf12134 -c ./devices.csv -d 5000
   node app/index.js -e http://example.com/backend -a asdf12134 -c ./devices.csv -b -i 10
   node app/index.js -e http://example.com/backend -a asdf12134 -c ./devices.csv -s 100 -D
+  node app/index.js -e http://example.com/backend -a asdf12134 -v variant1 variant2 variant3 -D
 
 ```
 ## Development

@@ -13,6 +13,8 @@ class CommandLineParserBuilder {
             .example("$0 -e http://example.com/backend -a asdf12134 -c ./devices.csv -d 5000", "")
             .example("$0 -e http://example.com/backend -a asdf12134 -c ./devices.csv -b -i 10", "")
             .example("$0 -e http://example.com/backend -a asdf12134 -c ./devices.csv -s 100 -D", "")
+            .example("$0 -e http://example.com/backend -a asdf12134 -v variant1 -D", "")
+            .example("$0 -e http://example.com/backend -a asdf12134 -v variant1 variant2 variant3", "")
 
             .alias("e", "endPoint")
             .nargs("e", 1)
@@ -24,7 +26,7 @@ class CommandLineParserBuilder {
 
             .alias("c", "csv")
             .nargs("c", 1)
-            .describe("c", "The path to the CSV path containing the alias in format 'variantId;alias;tokenId'")
+            .describe("c", "The path to the CSV path containing the alias in format 'variants;alias;tokenId'")
 
             .alias("d", "delay")
             .nargs("d", 1)
@@ -51,9 +53,10 @@ class CommandLineParserBuilder {
             .default("b", false)
             .describe("b", "Whether or not the notifications will be sent using the 'batch' feature. Incompatible with --chunkSize option.")
 
-            .alias("v", "variantId")
-            .nargs("v", 1)
-            .describe("v", "The ID of the variant that will receive the notification. Incompatible with --chunkSize, --batchMode and --csv options.")
+            .alias("v", "variants")
+            .array("v")
+            .default("v", undefined)
+            .describe("v", "A list of variant IDs that will receive the notification. Incompatible with --chunkSize, --batchMode and --csv options.")
 
             .check(this.checkArguments)
 
@@ -83,14 +86,18 @@ class CommandLineParserBuilder {
             throw new Error("BatchMode (-b) and ChunkSize (-s) cannot be together.");
         }
 
-        if (args.chunkSize > 0 && args.variantId
-            || args.batchMode && args.variantId
-            || args.csv && args.variantId) {
+        if (args.chunkSize > 0 && args.variants
+            || args.batchMode && args.variants
+            || args.csv && args.variants) {
             throw new Error("BatchMode (-b), csv (-c) and ChunkSize (-s) cannot be with Variant (-v).");
         }
 
-        if (!args.csv && !args.variantId) {
-            throw new Error("Either a list of aliases or a variantId must be specified");
+        if (!args.csv && !args.variants) {
+            throw new Error("Either a list of aliases or a variants must be specified");
+        }
+
+        if (args.variants && !Array.isArray(args.variants)) {
+            throw new Error("variants (-v) must be a list of ids");
         }
 
         return true;
