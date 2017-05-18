@@ -26,13 +26,13 @@ class PushTestCloudAppAPI {
     }
 
     notifyAlias(alias) {
-        const url = `${this.baseUrl}/${this.pushRoute}/${this.appId}/${alias}`;
+        const url = `${this.baseUrl}/${this.pushRoute}/${this.appId}/alias/${alias}`;
 
         return this.get(url);
     }
 
     notifyAliasesIndividually(aliases) {
-        const url = `${this.baseUrl}/${this.pushRoute}/${this.appId}`;
+        const url = `${this.baseUrl}/${this.pushRoute}/${this.appId}/alias`;
 
         return this.post(url, aliases);
     }

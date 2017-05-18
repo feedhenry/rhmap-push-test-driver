@@ -55,7 +55,6 @@ class CommandLineParserBuilder {
 
             .alias("v", "variants")
             .array("v")
-            .default("v", undefined)
             .describe("v", "A list of variant IDs that will receive the notification. Incompatible with --chunkSize, --batchMode and --csv options.")
 
             .check(this.checkArguments)

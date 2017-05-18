@@ -23,7 +23,7 @@ describe("UPSAPI", () => {
         api = new API(args);
         spyOn(api, "post");
 
-        const url = `${api.baseUrl}/${api.pushRoute}/${api.appId}`;
+        const url = `${api.baseUrl}/${api.pushRoute}/${api.appId}/alias`;
 
         api.notifyAliasesIndividually(aliases);
         expect(api.post).toHaveBeenCalledWith(url, aliases);
@@ -36,7 +36,7 @@ describe("UPSAPI", () => {
         api = new API(args);
         spyOn(api, "post");
 
-        const url = `${api.baseUrl}/${api.pushRoute}/${api.appId}`;
+        const url = `${api.baseUrl}/${api.pushRoute}/${api.appId}/alias`;
 
         api.notifyAliasesIndividually(aliases);
         expect(api.post).toHaveBeenCalledWith(url, aliases);
