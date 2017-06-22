@@ -3,6 +3,7 @@
 const TestRunnerSingleAsync = require("../model/test-runner-single-async");
 const TestRunnerChunksAsync = require("../model/test-runner-chunk-async");
 const TestRunnerBatch = require("../model/test-runner-batch");
+const TestRunnerVariants = require("../model/test-runner-variants");
 
 class TestRunnerBuilder {
 
@@ -23,7 +24,9 @@ class TestRunnerBuilder {
     }
 
     getTestRunnerType() {
-        if (this.args.batchMode) {
+        if (this.args.variants) {
+            return TestRunnerVariants;
+        } else if (this.args.batchMode) {
             return TestRunnerBatch;
         } else if (this.args.chunkSize > 0) {
             return TestRunnerChunksAsync;

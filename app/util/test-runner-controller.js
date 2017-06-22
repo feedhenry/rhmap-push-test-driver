@@ -11,8 +11,14 @@ class TestRunnerController {
     }
 
     start() {
-        return this.getAliasesFromCSV()
-            .then(aliases => this.startTestRunnersAsync(aliases));
+        return new Promise((res, rej) => {
+            if (this.args.csv) {
+                return this.getAliasesFromCSV()
+                    .then(aliases => this.startTestRunnersAsync(aliases));
+            } else {
+                return this.startTestRunnersAsync();
+            }
+        });
     }
 
     getAliasesFromCSV() {

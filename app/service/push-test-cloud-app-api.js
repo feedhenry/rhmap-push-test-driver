@@ -26,13 +26,13 @@ class PushTestCloudAppAPI {
     }
 
     notifyAlias(alias) {
-        const url = `${this.baseUrl}/${this.pushRoute}/${this.appId}/${alias}`;
+        const url = `${this.baseUrl}/${this.pushRoute}/${this.appId}/alias/${alias}`;
 
         return this.get(url);
     }
 
     notifyAliasesIndividually(aliases) {
-        const url = `${this.baseUrl}/${this.pushRoute}/${this.appId}`;
+        const url = `${this.baseUrl}/${this.pushRoute}/${this.appId}/alias`;
 
         return this.post(url, aliases);
     }
@@ -41,6 +41,18 @@ class PushTestCloudAppAPI {
         const url = `${this.baseUrl}/${this.pushRoute}/${this.appId}/batch`;
 
         return this.post(url, aliases);
+    }
+
+    notifyVariant(variant) {
+        const url = `${this.baseUrl}/${this.pushRoute}/${this.appId}/variants/${variant}`;
+
+        return this.get(url);
+    }
+
+    notifyVariants(variants) {
+        const url = `${this.baseUrl}/${this.pushRoute}/${this.appId}/variants`;
+
+        return this.post(url, variants);
     }
 
     get(url) {
