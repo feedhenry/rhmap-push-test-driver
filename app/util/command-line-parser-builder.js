@@ -26,7 +26,7 @@ class CommandLineParserBuilder {
 
             .alias("c", "csv")
             .nargs("c", 1)
-            .describe("c", "The path to the CSV path containing the alias in format 'variants;alias;tokenId'")
+            .describe("c", "The path to the CSV path containing the alias in format 'variantId;alias;tokenId'")
 
             .alias("d", "delay")
             .nargs("d", 1)
